@@ -3,7 +3,7 @@
     <%= form.label :title, "Title:" %> <br>
     <%= form.text_field :title %> <br>
     <%= form.label :content, "Post content:" %> <br>
-    <%= form.text_area :content %>
+    <%= form.text_area :content %> <br>
     <%= form.submit "Post it!!!" %>
   <% end %>
 </section>
@@ -14,6 +14,13 @@
       <h2><%= post.title %></h2>
       <p><%= post.content %></p>
 			<p><strong>Created by:</strong> <%= post.creator.username %></p>
+      <p><strong>Likes:</strong> <%= post.liked_users.length %>
+      <% unless post.liked_users.include?(current_user) %>
+        <%= button_to "Like", likes_path, params: {post_id: post.id}, method: :post %>
+      <% else %>
+        <%= button_to "Dislike", likes_path, params: {post_id: post.id}, method: :delete %>
+      <% end %>
+      </p>
     </article>
   <% end %>
 </section>
