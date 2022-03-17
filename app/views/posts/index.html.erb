@@ -1,0 +1,19 @@
+<section>
+  <%= form_with model: @post do |form| %>
+    <%= form.label :title, "Title:" %> <br>
+    <%= form.text_field :title %> <br>
+    <%= form.label :content, "Post content:" %> <br>
+    <%= form.text_area :content %>
+    <%= form.submit "Post it!!!" %>
+  <% end %>
+</section>
+
+<section>
+  <% @posts.each do |post| %>
+    <article>
+      <h2><%= post.title %></h2>
+      <p><%= post.content %></p>
+			<p><strong>Created by:</strong> <%= post.creator.username %></p>
+    </article>
+  <% end %>
+</section>
