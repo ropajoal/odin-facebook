@@ -7,6 +7,11 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
 
+  has_many :infriendships, class_name: "Friendship", foreign_key: :user2_id, dependent: :destroy
+  has_many :infriends, through: :infriendships, source: :user1 
+  has_many :outfriendships, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy
+  has_many :outfriends, through: :outfriendships, source: :user2
+
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, authentication_keys: [:login]
 
@@ -18,6 +23,10 @@ class User < ApplicationRecord
 
   def login
     @login || self.username || self.email
+  end
+
+  def friends #Change for a query
+    infriends + outfriends
   end
 
   def self.find_for_database_authentication(warden_conditions)

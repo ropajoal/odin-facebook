@@ -1,0 +1,22 @@
+<section>
+  <h1><%= @user.username %></h1>
+  <p>Email: <%= @user.email %></p>
+  <p>Since: <%= @user.created_at %></p>
+  <% if @friendship.nil? %>
+    <p><%= button_to "Send Friend Request", friendships_path, params: {friend_id: @user.id}, method: :post %></p>
+  <% elsif @friendship.status == "accepted" %>
+    <p>You are Friends!!!</p>
+  <% elsif @friendship.status == "declined" %>
+    <% if @friendship.user1_id == current_user.id %>
+      <p>This user has declined your request. Sorry</p>
+    <% else %>
+      <p>You have declined the friend request</p>
+    <% end %>
+  <% elsif @friendship.status == "requested" %>
+    <% if @friendship.user1_id == current_user.id %>
+      <p>Request of frienship sent</p>
+    <% else %>
+      <p>This user has sent to you a friend request <%= button_to "Accept", friendships_accept_path, params: {friend_id: @user.id}, method: :post %><%= button_to "Decline", friendships_decline_path, params: {friend_id: @user.id}, method: :post %></p>
+    <% end %>
+  <% end %>
+</section>
