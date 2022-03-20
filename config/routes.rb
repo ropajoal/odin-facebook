@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post 'friendships', to: "friendships#create"
   post 'friendships/accept', to: "friendships#accept"
   post 'friendships/decline', to: "friendships#decline"
+  post 'comments', to: "comments#create"
 
   devise_for :users
   

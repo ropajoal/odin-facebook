@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @posts = Post.includes(:creator,:likes,:liked_users).all
+    @posts = Post.includes(:creator,:likes,:liked_users,comments: [:creator]).all
 		@post = Post.new
   end
 

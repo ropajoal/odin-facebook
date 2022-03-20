@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_17_230112) do
+ActiveRecord::Schema.define(version: 2022_03_19_220639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.bigint "post_id", null: false
+    t.bigint "creator_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["creator_id"], name: "index_comments_on_creator_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
 
   create_table "friendships", force: :cascade do |t|
     t.bigint "user1_id", null: false
@@ -57,6 +67,8 @@ ActiveRecord::Schema.define(version: 2022_03_17_230112) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "friendships", "users", column: "user1_id"
   add_foreign_key "friendships", "users", column: "user2_id"
   add_foreign_key "likes", "posts"

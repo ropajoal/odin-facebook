@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :outfriendships, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy
   has_many :outfriends, through: :outfriendships, source: :user2
 
+  has_many :comments, foreign_key: :creator_id
+
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, authentication_keys: [:login]
 
@@ -26,7 +28,8 @@ class User < ApplicationRecord
   end
 
   def friends #Change for a query
-    infriends + outfriends
+    #infriends + outfriends
+    User.find_by_sql("SELECT U.* FROM users U INNER JOIN friendships F ON F.user2_id = U.id WHERE F.user1_id = #{id} AND F.status = 'accepted' UNION SELECT U.* FROM users U INNER JOIN friendships F ON F.user1_id = U.id WHERE F.user2_id = #{id} AND F.status = 'accepted'")
   end
 
   def self.find_for_database_authentication(warden_conditions)

@@ -21,6 +21,19 @@
         <%= button_to "Dislike", likes_path, params: {post_id: post.id}, method: :delete %>
       <% end %>
       </p>
+      <div class="comments">
+        <ul>
+        <% post.comments.each do |comment| %>
+          <li><%= comment.content %> <b>by </b><%= link_to comment.creator.username,  %></li>
+        <% end %>
+        </ul>
+        <%= form_with model: post.comments.build do |form| %>
+          <%= form.hidden_field :post_id, value: post.id %>
+          <%= form.label :content, "Write a comment:" %> 
+          <%= form.text_field :content, placeholder: "What do you thing?" %>
+          <%= form.submit "Send Comment" %>
+        <% end %>
+      </div>
     </article>
   <% end %>
 </section>
