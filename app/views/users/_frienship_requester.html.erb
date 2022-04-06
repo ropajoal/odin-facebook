@@ -1,0 +1,21 @@
+<% if user == current_user %>
+  <p>It's me!!!</p>
+<% else %>
+<% if friendship.nil? %>
+  <p><%= button_to "Send Friend Request", friendships_path, params: {friend_id: user.id}, method: :post %></p>
+<% elsif friendship.status == "accepted" %>
+  <p>You are Friends!!!</p>
+<% elsif friendship.status == "declined" %>
+  <% if friendship.user1_id == current_user.id %>
+    <p>This user has declined your request. Sorry</p>
+  <% else %>
+    <p>You have declined the friend request</p>
+  <% end %>
+<% elsif friendship.status == "requested" %>
+  <% if friendship.user1_id == current_user.id %>
+    <p>Request of frienship sent</p>
+  <% else %>
+    <p style="display:inline">This user has sent to you a friend request <%= button_to "Accept", friendships_accept_path, params: {friend_id: user.id}, method: :post, form: { style: "display:inline" } %> | <%= button_to "Decline", friendships_decline_path, params: {friend_id: user.id}, method: :post, form: { style: "display:inline" } %></p>
+  <% end %>
+<% end %>
+<% end %>

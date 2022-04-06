@@ -1,16 +1,23 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include Gravtastic
+  is_gravtastic
 
   has_many :created_posts, foreign_key: :creator_id, class_name: "Post" 
 
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
 
-  has_many :infriendships, class_name: "Friendship", foreign_key: :user2_id, dependent: :destroy
+  has_many :friendships, ->(user){where("user1_id = #{user.id} OR user2_id = #{user.id}")}, class_name: "Friendship"
+  has_many :infriendships, class_name: "Friendship", foreign_key: :user2_id, dependent: :destroy 
   has_many :infriends, through: :infriendships, source: :user1 
-  has_many :outfriendships, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy
+  has_many :outfriendships, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy  
   has_many :outfriends, through: :outfriendships, source: :user2
+  has_many :infriendships_a, -> {where "status = 'accepted'"}, class_name: "Friendship", foreign_key: :user2_id, dependent: :destroy 
+  has_many :infriends_a, through: :infriendships_a, source: :user1 
+  has_many :outfriendships_a, -> {where "status = 'accepted'"}, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy  
+  has_many :outfriends_a, through: :outfriendships_a, source: :user2
 
   has_many :comments, foreign_key: :creator_id
 
@@ -27,9 +34,14 @@ class User < ApplicationRecord
     @login || self.username || self.email
   end
 
+  def friendships
+    infriendships + outfriendships
+  end
+
+
   def friends #Change for a query
-    #infriends + outfriends
-    User.find_by_sql("SELECT U.* FROM users U INNER JOIN friendships F ON F.user2_id = U.id WHERE F.user1_id = #{id} AND F.status = 'accepted' UNION SELECT U.* FROM users U INNER JOIN friendships F ON F.user1_id = U.id WHERE F.user2_id = #{id} AND F.status = 'accepted'")
+    infriends_a + outfriends_a
+    #User.find_by_sql("SELECT U.* FROM users U INNER JOIN friendships F ON F.user2_id = U.id WHERE F.user1_id = #{id} AND F.status = 'accepted' UNION SELECT U.* FROM users U INNER JOIN friendships F ON F.user1_id = U.id WHERE F.user2_id = #{id} AND F.status = 'accepted'")
   end
 
   def self.find_for_database_authentication(warden_conditions)

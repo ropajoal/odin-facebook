@@ -24,7 +24,7 @@
       <div class="comments">
         <ul>
         <% post.comments.each do |comment| %>
-          <li><%= comment.content %> <b>by </b><%= link_to comment.creator.username,  %></li>
+          <li><%= comment.content %> <b>by </b><%= link_to comment.creator.username, user_show_path(comment.creator.username) %></li>
         <% end %>
         </ul>
         <%= form_with model: post.comments.build do |form| %>
