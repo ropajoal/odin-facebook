@@ -6,7 +6,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    related = User.find(current_user.id).related_people 
+    #requested = User.find(current_user.id).request_pending_friends
+    @users = User.all.reject {|e| related.include? e or e.id == current_user.id }
     @friendships = current_user.friendships
   end
 

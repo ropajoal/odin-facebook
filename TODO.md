@@ -1,0 +1,10 @@
+- [x] Implement Css and Javascript Bundling to add Bootstrap
+- [ ] Create the frontend with React
+- [ ] Make a NavBar with info about Friend Requests to Accept 
+- [x] List all users who are not your friends or have a friend request to accept
+- [ ] Setup OmniAuth to sign-in with Facebook, GitHub or Google
+- [ ] Create a welcome mail for every time the user signs up
+- [ ] Make a chat with Turbo and Stimulus
+- [ ] Polimorphic Association for Posts text and image
+- [ ] Implement Active Storage
+- [ ] Give option to enter profile info including photo Profile
