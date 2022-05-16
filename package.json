@@ -2,10 +2,20 @@
   "name": "odin-facebook",
   "private": true,
   "dependencies": {
+    "@hotwired/turbo-rails": "^7.1.1",
+    "@popperjs/core": "^2.11.5",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.3",
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.8.1",
+    "esbuild": "^0.14.38",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "remount": "^0.11.0",
+    "sass": "^1.51.0",
+    "stimulus": "^3.0.1",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
@@ -13,5 +23,9 @@
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3"
+  },
+  "scripts": {
+    "build": "esbuild --loader:.js=jsx app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   }
 }

@@ -18,6 +18,10 @@ class User < ApplicationRecord
   has_many :infriends_a, through: :infriendships_a, source: :user1 
   has_many :outfriendships_a, -> {where "status = 'accepted'"}, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy  
   has_many :outfriends_a, through: :outfriendships_a, source: :user2
+  has_many :infriendships_r, -> {where "status = 'requested'"}, class_name: "Friendship", foreign_key: :user2_id, dependent: :destroy 
+  has_many :infriends_r, through: :infriendships_r, source: :user1 
+  has_many :outfriendships_r, -> {where "status = 'requested'"}, class_name: "Friendship", foreign_key: :user1_id, dependent: :destroy  
+  has_many :outfriends_r, through: :outfriendships_r, source: :user2
 
   has_many :comments, foreign_key: :creator_id
 
@@ -38,10 +42,18 @@ class User < ApplicationRecord
     infriendships + outfriendships
   end
 
+  def related_people
+    infriends + outfriends
+  end
+
 
   def friends #Change for a query
     infriends_a + outfriends_a
     #User.find_by_sql("SELECT U.* FROM users U INNER JOIN friendships F ON F.user2_id = U.id WHERE F.user1_id = #{id} AND F.status = 'accepted' UNION SELECT U.* FROM users U INNER JOIN friendships F ON F.user1_id = U.id WHERE F.user2_id = #{id} AND F.status = 'accepted'")
+  end
+
+  def request_pending_friends
+    infriends_r + outfriends_r
   end
 
   def self.find_for_database_authentication(warden_conditions)
