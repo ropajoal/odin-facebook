@@ -68,3 +68,6 @@ gem "gravtastic", "~> 3.2"
 
 gem 'jsbundling-rails'  # needed for bootstrap javascript
 gem 'cssbundling-rails' # Install bootstrap 5
+
+gem "omniauth-facebook", "~> 9.0"
+gem "omniauth-rails_csrf_protection", "~> 1.0"

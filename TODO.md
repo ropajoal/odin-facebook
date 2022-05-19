@@ -1,5 +1,5 @@
 - [x] Implement Css and Javascript Bundling to add Bootstrap
-- [ ] Create the frontend with React
+- [ ] Replace the frontend with React
 - [ ] Make a NavBar with info about Friend Requests to Accept 
 - [x] List all users who are not your friends or have a friend request to accept
 - [ ] Setup OmniAuth to sign-in with Facebook, GitHub or Google
