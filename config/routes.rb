@@ -8,12 +8,10 @@ Rails.application.routes.draw do
   post 'friendships/decline', to: "friendships#decline"
   post 'comments', to: "comments#create"
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   
   get "/posts", to: "posts#index"
   post "/posts", to: "posts#create"
-
-  get "/hello", to: "hello#world"
 
   root "posts#index"
 end
