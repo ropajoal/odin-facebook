@@ -5,6 +5,8 @@ class User < ApplicationRecord
   is_gravtastic
 
   has_many :created_posts, foreign_key: :creator_id, class_name: "Post" 
+  has_many :image_posts, through: :created_posts, source: :post_element, source_type: "ImagePost"
+  has_many :text_posts, through: :created_posts, source: :post_element, source_type: "TextPost"
 
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post

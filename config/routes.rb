@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: "users/omniauth_callbacks" }
   
   get "/posts", to: "posts#index"
-  post "/posts", to: "posts#create"
-
+  post "/text_posts", to: "posts#create_text"
+  post "/image_posts", to: "posts#create_image"
   root "posts#index"
 end
