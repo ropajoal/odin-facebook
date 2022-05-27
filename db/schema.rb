@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_16_215441) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_25_210549) do
+>>>>>>> Polymorphic Posts text & image
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +63,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_16_215441) do
     t.index ["user2_id"], name: "index_friendships_on_user2_id"
   end
 
+  create_table "image_posts", force: :cascade do |t|
+    t.string "image_link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
@@ -72,12 +79,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_16_215441) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post_element_id"
+    t.string "post_element_type"
     t.index ["creator_id"], name: "index_posts_on_creator_id"
+  end
+
+  create_table "text_posts", force: :cascade do |t|
+    t.text "text_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
