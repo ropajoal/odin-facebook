@@ -12,7 +12,6 @@ class PostsController < ApplicationController
   end
 
   def create_text
-    puts "Why am I here?"
     @text_post = current_user.created_posts.build(post_element: TextPost.new(text_params)) 
     if @text_post.save
       redirect_to posts_path
@@ -22,12 +21,12 @@ class PostsController < ApplicationController
     end
   end
   
-  def create_image
-    @image_post = current_user.created_posts.build(post_element: ImagePost.new(image_params)) 
-    if @image_post.save
+  def create_image_attached
+    @image_attached_post = current_user.created_posts.build(post_element: ImageAttachedPost.new(image_attached_params)) 
+    if @image_attached_post.save
       redirect_to posts_path
     else
-      puts @image_post.errors.full_messages
+      puts @image_attached_post.errors.full_messages
       render :new
     end
   end
@@ -40,6 +39,10 @@ class PostsController < ApplicationController
 
   def image_params
     params.require(:image_post).permit(:image_link)
+  end
+
+  def image_attached_params
+    params.require(:image_attached_post).permit(:image)
   end
 
 end

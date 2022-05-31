@@ -10,8 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2022_05_25_210549) do
 >>>>>>> Polymorphic Posts text & image
+=======
+ActiveRecord::Schema[7.0].define(version: 2022_05_30_232957) do
+>>>>>>> ImageAttachedPost with activestorage
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +65,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_210549) do
     t.datetime "updated_at", null: false
     t.index ["user1_id"], name: "index_friendships_on_user1_id"
     t.index ["user2_id"], name: "index_friendships_on_user2_id"
+  end
+
+  create_table "image_attached_posts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "image_posts", force: :cascade do |t|

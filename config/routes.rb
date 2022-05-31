@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   get "/posts", to: "posts#index"
   post "/text_posts", to: "posts#create_text"
   post "/image_posts", to: "posts#create_image"
+  post "/image_attached_posts", to: "posts#create_image_attached"
   root "posts#index"
 end

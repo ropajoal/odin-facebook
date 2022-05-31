@@ -15,12 +15,22 @@
 </section>
 
 <section>
+  <%= form_with model: current_user.image_attached_posts.build do |form| %>
+    <%= form.label :image, "Upload Image:" %> <br>
+    <%= form.file_field :image %> <br>
+    <%= form.submit "Post it!!!" %>
+  <% end %>
+</section>
+
+<section>
   <% @posts.each do |post| %>
     <article>
       <% if post.post_element_type == "TextPost" %>
         <p><%= post.post_element.text_content %></p>
       <% elsif post.post_element_type == "ImagePost" %>
         <img src=<%= post.post_element.image_link %> />
+      <% elsif post.post_element_type == "ImageAttachedPost" %>
+        <%= image_tag(post.post_element.image) %>
       <% end %>
 			<p><strong>Created by:</strong> <%= post.creator.username %></p>
       <p><strong>Likes:</strong> <%= post.liked_users.length %>
