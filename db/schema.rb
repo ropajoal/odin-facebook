@@ -10,12 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_210549) do
->>>>>>> Polymorphic Posts text & image
-=======
 ActiveRecord::Schema[7.0].define(version: 2022_05_30_232957) do
->>>>>>> ImageAttachedPost with activestorage
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
