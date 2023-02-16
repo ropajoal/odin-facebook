@@ -12,6 +12,11 @@ class UsersController < ApplicationController
     @friendships = current_user.friendships
   end
 
+  def to_accept
+    @users = current_user.infriends_r
+    @friendships = current_user.friendships
+  end
+
   #private
   #def like_params
   #  params.require(:like).permit(:post_id)
