@@ -39,3 +39,4 @@ yarn-debug.log*
 !/app/assets/builds/.keep
 
 *.swp
+/TODO.md
