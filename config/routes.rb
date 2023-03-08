@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  mount ActionCable.server => "/cable"
+  resources :messages
+
   post 'likes', to: "likes#create"
   delete 'likes', to: "likes#delete"
   get '/user/:username', to: "users#show", as: :user_show

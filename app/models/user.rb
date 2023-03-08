@@ -28,6 +28,9 @@ class User < ApplicationRecord
 
   has_many :comments, foreign_key: :creator_id
 
+  has_many :sended_messages, foreign_key: :sender_id, class_name:"Message", dependent: :destroy
+  has_many :received_messages, foreign_key: :receiver_id, class_name:"Message", dependent: :destroy
+
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, authentication_keys: [:login]
 
