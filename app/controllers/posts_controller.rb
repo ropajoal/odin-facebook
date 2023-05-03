@@ -20,6 +20,16 @@ class PostsController < ApplicationController
       render :new
     end
   end
+
+  def create_image
+    @image_post = current_user.created_posts.build(post_element: ImagePost.new(image_params)) 
+    if @image_post.save
+      redirect_to posts_path
+    else
+      puts @text_post.errors.full_messages
+      render :new
+    end
+  end
   
   def create_image_attached
     @image_attached_post = current_user.created_posts.build(post_element: ImageAttachedPost.new(image_attached_params)) 
