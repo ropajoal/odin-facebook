@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "Ruby",
+            "name": "Rails Server",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/rails",
+            "args": [
+                "server"
+            ],
+            "showDebuggerOutput": true,
+            "env": {
+                "PATH": "/home/ropajoal/.rvm/gems/ruby-3.0.0/bin:/home/ropajoal/.rvm/gems/ruby-3.0.0@global/bin:/home/ropajoal/.rvm/rubies/ruby-3.0.0/bin:$PATH",
+                "rvm_prefix": "/home/ropajoal",
+                "rvm_path": "/home/ropajoal/.rvm",
+                "rvm_bin_path": "/home/ropajoal/.rvm/bin",
+                "GEM_HOME": "/home/ropajoal/.rvm/gems/ruby-3.0.0",
+                "GEM_PATH": "/home/ropajoal/.rvm/gems/ruby-3.0.0:/home/ropajoal/.rvm/gems/ruby-3.0.0@global",
+                "MY_RUBY_HOME": "/home/ropajoal/.rvm/rubies/ruby-3.0.0",
+                "IRBRC": "/home/ropajoal/.rvm/rubies/ruby-3.0.0/.irbrc",
+                "RUBY_VERSION": "ruby-3.0.0"
+            }
+        }
+    ]
+}

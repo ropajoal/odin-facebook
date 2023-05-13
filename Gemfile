@@ -37,6 +37,8 @@ gem "stimulus-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "ruby-debug-ide", "~> 0.7.3"
+  gem "debase", "~> 0.2.5.beta2"
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
 end
