@@ -7,9 +7,19 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    ActionCable.server.broadcast('MessagesChannel',{
+    message = self.reload
+    if message.sender.id > message.receiver.id
+      user1 = message.receiver.id
+      user2 = message.sender.id
+    else
+      user1 = message.sender.id
+      user2 = message.receiver.id
+    end
+    ActionCable.server.broadcast('messages_'+user1.to_s+'_'+user2.to_s,{
       id: self.id,
-      body: self.body 
+      body: self.body,
+      sender: message.sender.id,
+      receiver: message.receiver.id
     })
   end
 

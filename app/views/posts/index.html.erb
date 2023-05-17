@@ -91,5 +91,11 @@
       <% end %>
     </ul>
   </div>
-  <%= content_tag(:div, "", id:"chatReact", data:{ controller: "chat-react", chat_react_authenticity_token: form_authenticity_token })%>
+  <%= content_tag(:div, "", id:"chatReact", data:{ 
+    controller: "chat-react", 
+    chat_react_authenticity_token: form_authenticity_token,  
+    chat_react_friends: current_user.friends.to_json,
+    chat_react_user_id: current_user.id
+  })%>
+
 </aside>

@@ -1,9 +1,20 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_message, only: %i[ show edit update destroy ]
 
   # GET /messages or /messages.json
   def index
-    @messages = Message.all
+    if params[:interlocutorEmail]
+      interlocutor = User.find_by(email: params[:interlocutorEmail])
+      sended_messages = Message.where("sender_id = ? AND receiver_id = ?", current_user.id, interlocutor.id)
+      received_messages = Message.where("sender_id = ? AND receiver_id = ?", interlocutor.id, current_user.id)
+      @messages = (sended_messages + received_messages).sort_by{|m| m.created_at}
+    else
+      @messages = Message.all
+    end
+    respond_to do |format|
+        format.json { render json: @messages, status: :ok, location: @message}
+    end
   end
 
   # GET /messages/1 or /messages/1.json
@@ -21,15 +32,12 @@ class MessagesController < ApplicationController
 
   # POST /messages or /messages.json
   def create
-    receiver_user = User.find_by( email: params[:receiverEmail])
-    puts message_params
-    puts current_user.id
-    puts receiver_user.id
+    receiver_user = User.find_by( email: params[:interlocutorEmail])
     @message = Message.new(body: message_params[:body], sender_id: current_user.id, receiver_id: receiver_user.id)
     respond_to do |format|
       if @message.save
         format.html { redirect_to message_url(@message), notice: "Message was successfully created." }
-        format.json { render :show, status: :created, location: @message }
+        format.json { render json: @message, status: :created, location: @message }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @message.errors, status: :unprocessable_entity }
