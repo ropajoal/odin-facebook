@@ -83,19 +83,19 @@
   </section>
 </main>
 <aside id="chat">
+
   <div id="friends">
     <h3>Your friends:</h3>
     <ul>
-      <% current_user.friends.each do |friend| %>
-        <li class="emailsOfFriends"><%= friend.email %></li>
-      <% end %>
+
+      <%= content_tag(:div, "", id:"chatReact", data:{ 
+        controller: "chat-react", 
+        chat_react_friends: current_user.friends.to_json,
+        chat_react_user_id: current_user.id
+      })%>
+
     </ul>
   </div>
-  <%= content_tag(:div, "", id:"chatReact", data:{ 
-    controller: "chat-react", 
-    chat_react_authenticity_token: form_authenticity_token,  
-    chat_react_friends: current_user.friends.to_json,
-    chat_react_user_id: current_user.id
-  })%>
+
 
 </aside>

@@ -1,6 +1,6 @@
 class MessagesChannel < ApplicationCable::Channel
   def subscribed
-    interlocutor = User.find_by(email: params[:email])
+    interlocutor = User.find(params[:interId])
     if current_user.id < interlocutor.id
       user1 = current_user
       user2 = interlocutor

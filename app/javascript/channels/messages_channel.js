@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("MessagesChannel", {
+export default MessagesChannel = consumer.subscriptions.create("MessagesChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },

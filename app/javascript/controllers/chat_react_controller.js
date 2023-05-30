@@ -10,6 +10,6 @@ export default class extends Controller {
     const friends = JSON.parse(this.data.get("friends"));
     const userId = this.data.get("user_id");
 
-    createRoot(this.element).render(<ChatManager authenticityToken={authenticityToken} friends={friends} userId={userId}/>);
+    createRoot(this.element).render(<ChatManager {...{ friends, userId }} />);
   }
 }

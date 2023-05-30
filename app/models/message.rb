@@ -18,8 +18,8 @@ class Message < ApplicationRecord
     ActionCable.server.broadcast('messages_'+user1.to_s+'_'+user2.to_s,{
       id: self.id,
       body: self.body,
-      sender: message.sender.id,
-      receiver: message.receiver.id
+      sender_id: message.sender.id,
+      receiver_id: message.receiver.id
     })
   end
 

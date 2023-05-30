@@ -4,8 +4,8 @@ class MessagesController < ApplicationController
 
   # GET /messages or /messages.json
   def index
-    if params[:interlocutorEmail]
-      interlocutor = User.find_by(email: params[:interlocutorEmail])
+    if params[:interId]
+      interlocutor = User.find(params[:interId])
       sended_messages = Message.where("sender_id = ? AND receiver_id = ?", current_user.id, interlocutor.id)
       received_messages = Message.where("sender_id = ? AND receiver_id = ?", interlocutor.id, current_user.id)
       @messages = (sended_messages + received_messages).sort_by{|m| m.created_at}
@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
       @messages = Message.all
     end
     respond_to do |format|
-        format.json { render json: @messages, status: :ok, location: @message}
+      format.json { render json: @messages, status: :ok, location: @message}
     end
   end
 
@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
 
   # POST /messages or /messages.json
   def create
-    receiver_user = User.find_by( email: params[:interlocutorEmail])
+    receiver_user = User.find(params[:interId])
     @message = Message.new(body: message_params[:body], sender_id: current_user.id, receiver_id: receiver_user.id)
     respond_to do |format|
       if @message.save
