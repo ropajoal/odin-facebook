@@ -40,3 +40,5 @@ yarn-debug.log*
 
 *.swp
 /TODO.md
+vendor
+node_modules

@@ -1,75 +1,101 @@
-<section>
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#text" type="button" role="tab" aria-controls="home" aria-selected="true">Text</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#imageUrl" type="button" role="tab" aria-controls="profile" aria-selected="false">Upload Image Url</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#uploadImage" type="button" role="tab" aria-controls="contact" aria-selected="false">Upload Image</button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-<div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
-  <%= form_with model: current_user.text_posts.build do |form| %>
-    <%= form.label :text_content, "Post content:" %> <br>
-    <%= form.text_area :text_content %> <br>
-    <%= form.submit "Post it!!!" %>
-  <% end %>
-</div>
+<%= stylesheet_link_tag "posts", "data-turbo-track": "reload" %>
+<aside id="userInfo">
+  <%= image_tag current_user.gravatar_url(default: "wavatar") %>
+  <h1><%= current_user.username %></h1>
+  <p>Email: <%= current_user.email %></p>
+  <p>Since: <%= current_user.created_at %></p>
+</aside>
+<main>
+  <section>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#text" type="button" role="tab" aria-controls="home" aria-selected="true">Text</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#imageUrl" type="button" role="tab" aria-controls="profile" aria-selected="false">Upload Image Url</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#uploadImage" type="button" role="tab" aria-controls="contact" aria-selected="false">Upload Image</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
+    <%= form_with model: current_user.text_posts.build do |form| %>
+      <%= form.label :text_content, "Post content:" %> <br>
+      <%= form.text_area :text_content %> <br>
+      <%= form.submit "Post it!!!" %>
+    <% end %>
+  </div>
 
-<div class="tab-pane fade" id="imageUrl" role="tabpanel" aria-labelledby="imageUrl-tab">
-  <%= form_with model: current_user.image_posts.build do |form| %>
-    <%= form.label :image_link, "Image Url:" %> <br>
-    <%= form.url_field :image_link %> <br>
-    <%= form.submit "Post it!!!" %>
-  <% end %>
-</div>
+  <div class="tab-pane fade" id="imageUrl" role="tabpanel" aria-labelledby="imageUrl-tab">
+    <%= form_with model: current_user.image_posts.build do |form| %>
+      <%= form.label :image_link, "Image Url:" %> <br>
+      <%= form.url_field :image_link %> <br>
+      <%= form.submit "Post it!!!" %>
+    <% end %>
+  </div>
 
-<div class="tab-pane fade" id="uploadImage" role="tabpanel" aria-labelledby="uploadImage-tab">
-  <%= form_with model: current_user.image_attached_posts.build do |form| %>
-    <%= form.label :image, "Upload Image:" %> <br>
-    <%= form.file_field :image %> <br>
-    <%= form.submit "Post it!!!" %>
-  <% end %>
-</div>
-</div>
-</section>
+  <div class="tab-pane fade" id="uploadImage" role="tabpanel" aria-labelledby="uploadImage-tab">
+    <%= form_with model: current_user.image_attached_posts.build do |form| %>
+      <%= form.label :image, "Upload Image:" %> <br>
+      <%= form.file_field :image %> <br>
+      <%= form.submit "Post it!!!" %>
+    <% end %>
+  </div>
+  </div>
+  </section>
 
-<section>
-  <% @posts.each do |post| %>
-    <article>
-      <% if post.post_element_type == "TextPost" %>
-        <p><%= post.post_element.text_content %></p>
-      <% elsif post.post_element_type == "ImagePost" %>
-        <img src=<%= post.post_element.image_link %> />
-      <% elsif post.post_element_type == "ImageAttachedPost" %>
-        <%= image_tag(post.post_element.image) %>
-      <% end %>
-			<p><strong>Created by:</strong> <%= post.creator.username %></p>
-      <p><strong>Likes:</strong> <%= post.liked_users.length %>
-      <% unless post.liked_users.include?(current_user) %>
-        <%= button_to "Like", likes_path, params: {post_id: post.id}, method: :post %>
-      <% else %>
-        <%= button_to "Dislike", likes_path, params: {post_id: post.id}, method: :delete %>
-      <% end %>
-      </p>
-      <div class="comments">
-        <ul>
-        <% post.comments.each do |comment| %>
-          <li><%= comment.content %> <b>by </b><%= link_to comment.creator.username, user_show_path(comment.creator.username) %></li>
+  <section>
+    <% @posts.each do |post| %>
+      <article>
+        <% if post.post_element_type == "TextPost" %>
+          <p><%= post.post_element.text_content %></p>
+        <% elsif post.post_element_type == "ImagePost" %>
+          <img src=<%= post.post_element.image_link %> />
+        <% elsif post.post_element_type == "ImageAttachedPost" %>
+          <%= image_tag(post.post_element.image, style:"width:100%; height:auto") %>
         <% end %>
-        </ul>
-        <%= form_with model: post.comments.build do |form| %>
-          <%= form.hidden_field :post_id, value: post.id %>
-          <%= form.label :content, "Write a comment:" %> 
-          <%= form.text_field :content, placeholder: "What do you thing?" %>
-          <%= form.submit "Send Comment" %>
+        <p><strong>Created by:</strong> <%= post.creator.username %></p>
+        <p><strong>Likes:</strong> <%= post.liked_users.length %>
+        <% unless post.liked_users.include?(current_user) %>
+          <%= button_to "Like", likes_path, params: {post_id: post.id}, method: :post %>
+        <% else %>
+          <%= button_to "Dislike", likes_path, params: {post_id: post.id}, method: :delete %>
         <% end %>
-      </div>
-    </article>
-  <% end %>
-	<!--<main-component/> -->
-  <%= content_tag(:div, "", id:"app", data: { controller: "react" }) %>
-</section>
+        </p>
+        <div class="comments">
+          <ul>
+          <% post.comments.each do |comment| %>
+            <li><%= comment.content %> <b>by </b><%= link_to comment.creator.username, user_show_path(comment.creator.username) %></li>
+          <% end %>
+          </ul>
+          <%= form_with model: post.comments.build do |form| %>
+            <%= form.hidden_field :post_id, value: post.id %>
+            <%= form.label :content, "Write a comment:" %> 
+            <%= form.text_field :content, placeholder: "What do you thing?" %>
+            <%= form.submit "Send Comment" %>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+    <!--<main-component/> -->
+    <%= content_tag(:div, "", id:"app", data: { controller: "react" }) %>
+  </section>
+</main>
+<aside id="chat">
+
+  <div id="friends">
+    <h3>Your friends:</h3>
+    <ul>
+
+      <%= content_tag(:div, "", id:"chatReact", data:{ 
+        controller: "chat-react", 
+        chat_react_friends: current_user.friends.to_json,
+        chat_react_user_id: current_user.id
+      })%>
+
+    </ul>
+  </div>
+
+
+</aside>

@@ -1,0 +1,99 @@
+main {
+  width: 50%;
+}
+
+#chat {
+  width: 25%;
+  height: fit-content;
+  position: sticky;
+  top: 0;
+}
+
+#userInfo {
+  width: 25%;
+  height: fit-content;
+  position: sticky;
+  top: 0;
+}
+
+.contentContainer {
+  flex-shrink: 0;
+  flex-grow: 1 2 1;
+  gap: 10px;
+}
+
+.messages {
+  height: 60%;
+  overflow-y: scroll;
+  padding: 0 20px;
+  margin: 10% auto 0 auto;
+  width: 80%;
+}
+
+.messageForm {
+
+  height: 10%;
+  width: 100%;
+
+  & form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+}
+
+.messageInput {
+  height: 40px;
+  width: 80%;
+}
+
+.messageButton {
+  //height: 46px;
+  width: 10%;
+  border: 2px solid #4CAF50;
+  padding: 1px 2px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.messageHeader {
+  height: 10%;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatBox {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  // height: 30px;
+  border: 1px solid black;
+  margin-left: 10px;
+  transition: all 0.5s ease-in-out;
+  background-color: white;
+}
+
+.messagesContainer {
+  transition: height 0.5s ease;
+}
+
+a[data-toggle="collapse"] i.bi::before {
+  //content: "\f107";
+  transition: transform 0.5s ease;
+  cursor: pointer;
+}
+
+a[data-bs-toggle="collapse"].collapsed i.bi::before {
+  //content: "\f106";
+  transform: rotate(180deg);
+  /* angle-up */
+}

@@ -1,2 +1,17 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  height: 100vh;
+  width: 100%;
+}
+
+#root {
+  height: 100vh;
+  width: 100%;
+}

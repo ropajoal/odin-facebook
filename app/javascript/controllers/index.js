@@ -4,8 +4,8 @@
 
 import { application } from "./application"
 
-//import  from "./.react_controller.js.swp"
-//application.register("", )
+import ChatReactController from "./chat_react_controller.js"
+application.register("chat-react", ChatReactController)
 
 import HelloController from "./hello_controller.js"
 application.register("hello", HelloController)
